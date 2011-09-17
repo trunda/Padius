@@ -1,0 +1,44 @@
+= Padius
+
+Padius is small, but powerfull templataing engine. Respectivle it is a framework
+to define own tag based templating language.
+
+This project is strongly based on original version for Ruby language called Radius.
+(https://github.com/jlong/radius)
+
+== Usage
+
+Creating own tags is easy. Here's small example:
+
+    require_once 'Padius/laoader.php';
+    
+    // Define tags
+    $c = new Padius\Context;
+    $c->defineTag("hello", function($tag) {
+        return "Hello " . $tag->attr('name', 'World') . "!";
+    });
+
+    $c->defineTag("repeat", function($tag) {
+        $number = $tag->attr('times', 1);
+        $result = "";
+        for ($i = 0; $i < $number; $i++) {
+            $result .= $tag->expand();
+        }
+        return $result;
+    });
+
+    // Create parser
+    $parser = new Padius\Parser($c, 'p'); // p is the prefix used for tags
+    echo $parser->parse("A small example:\n<p:repeat times=\"3\">* <p:hello name=\"John Doe\" />\n</p:repeat>");
+
+Output:
+
+    A small example:
+    * Hello John Doe!
+    * Hello John Doe!
+    * Hello John Doe!
+
+== Requirements
+
+Padius needs just PHP >= 5.3 nothing more.
+
