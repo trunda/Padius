@@ -33,7 +33,7 @@ namespace Padius\Parser;
 class Scanner implements IScanner
 {    
     /** @var string */
-    private static $pattern = "/<%s:([\w:]+?)(\s+(?:\w+\s*=\s*(?:\"[^\"]*?\"|'[^']*?')\s*)*|)(\/?)>\r?\n?|<\/%s:([\w:]+?)\s*>\r?\n?/mu";
+    private static $pattern = "/<%s:([\w:]+?)(\s+(?:\w+\s*=\s*(?:\"[^\"]*?\"|'[^']*?')\s*)*|)(\/?)>|<\/%s:([\w:]+?)\s*>/m";
     
     /**
      * Scans input source code and returns nodes array representing texts and
@@ -55,7 +55,7 @@ class Scanner implements IScanner
                     ? IScanner::FLAVOR_SELF 
                     : ($endTag ? IScanner::FLAVOR_END : IScanner::FLAVOR_OPEN);                
                 $pre = substr($data, 0, $m[0][1]);                
-                if (!preg_match('/^[\W\n\r]*$/', $pre)) {
+                if (!empty($pre)) {
                     $nodes[] = $pre;
                 }
                 $post = substr($data, $m[0][1]);

@@ -10,7 +10,7 @@ This project is strongly based on original version for Ruby language called Radi
 
 Creating own tags is easy. Here's small example:
 
-    require_once 'Padius/laoader.php';
+    require_once 'Padius/loader.php';
     
     // Define tags
     $c = new Padius\Context;
